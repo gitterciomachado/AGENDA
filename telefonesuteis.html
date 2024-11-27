@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Telefones Úteis - Profissionais de Saúde Mental</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Cadastro de Telefones Úteis - Profissionais de Saúde Mental</h1>
+    </header>
+
+    <div class="container">
+        <h2>Inserir Novo Contato</h2>
+        <div class="form-group">
+            <label for="nome">Nome do Profissional:</label>
+            <input type="text" id="nome" placeholder="Ex: Dr. João Silva">
+        </div>
+        <div class="form-group">
+            <label for="categoria">Categoria:</label>
+            <select id="categoria">
+                <option value="Psicólogo Clínico">Psicólogo Clínico</option>
+                <option value="Psiquiatra">Psiquiatra</option>
+                <option value="Psicoterapeuta">Psicoterapeuta</option>
+                <option value="Psicanalista">Psicanalista</option>
+                <option value="Assistente Social">Assistente Social</option>
+                <option value="Terapeuta Ocupacional">Terapeuta Ocupacional</option>
+                <option value="Neurologista">Neurologista</option>
+                <option value="Fonoaudiólogo">Fonoaudiólogo</option>
+                <option value="Nutricionista">Nutricionista</option>
+                <option value="Enfermeiro Psiquiátrico">Enfermeiro Psiquiátrico</option>
+                <option value="Médico Clínico Geral">Médico Clínico Geral</option>
+                <option value="Pedagogo">Pedagogo</option>
+                <option value="Aconselhador (Counselor)">Aconselhador (Counselor)</option>
+                <option value="Arteterapeuta">Arteterapeuta</option>
+                <option value="Musicoterapeuta">Musicoterapeuta</option>
+                <option value="Gestor de Saúde Mental">Gestor de Saúde Mental</option>
+                <option value="Médico de Família">Médico de Família</option>
+                <option value="Psicopedagogo">Psicopedagogo</option>
+                <option value="Outro">Outro</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" placeholder="Ex: (11) 99999-9999">
+        </div>
+        <div class="form-group">
+            <button onclick="inserirContato()">Inserir Contato</button>
+        </div>
+
+        <h2>Buscar por Categoria</h2>
+        <div class="form-group">
+            <label for="categoriaBusca">Selecione a Categoria:</label>
+            <select id="categoriaBusca" onchange="buscarContato()">
+                <option value="">Selecione...</option>
+                <option value="Psicólogo Clínico">Psicólogo Clínico</option>
+                <option value="Psiquiatra">Psiquiatra</option>
+                <option value="Psicoterapeuta">Psicoterapeuta</option>
+                <option value="Psicanalista">Psicanalista</option>
+                <option value="Assistente Social">Assistente Social</option>
+                <option value="Terapeuta Ocupacional">Terapeuta Ocupacional</option>
+                <option value="Neurologista">Neurologista</option>
+                <option value="Fonoaudiólogo">Fonoaudiólogo</option>
+                <option value="Nutricionista">Nutricionista</option>
+                <option value="Enfermeiro Psiquiátrico">Enfermeiro Psiquiátrico</option>
+                <option value="Médico Clínico Geral">Médico Clínico Geral</option>
+                <option value="Pedagogo">Pedagogo</option>
+                <option value="Aconselhador (Counselor)">Aconselhador (Counselor)</option>
+                <option value="Arteterapeuta">Arteterapeuta</option>
+                <option value="Musicoterapeuta">Musicoterapeuta</option>
+                <option value="Gestor de Saúde Mental">Gestor de Saúde Mental</option>
+                <option value="Médico de Família">Médico de Família</option>
+                <option value="Psicopedagogo">Psicopedagogo</option>
+                <option value="Outro">Outro</option>
+            </select>
+        </div>
+
+        <h2>Contatos Registrados</h2>
+        <table id="tabelaContatos">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Telefone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os resultados da busca e da inserção serão exibidos aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let contatosDatabase = [];
+
+        // Função para inserir novo contato
+        function inserirContato() {
+            const nome = document.getElementById('nome').value;
+            const categoria = document.getElementById('categoria').value;
+            const telefone = document.getElementById('telefone').value;
+
+            if (nome && categoria && telefone) {
+                // Adiciona o novo contato ao banco de dados
+                contatosDatabase.push({ nome, categoria, telefone });
+                document.getElementById('nome').value = "";
+                document.getElementById('telefone').value = "";
+                exibirTabelaContatos();
+            } else {
+                alert("Por favor, preencha todos os campos.");
+            }
+        }
+
+        // Função para exibir todos os contatos
+        function exibirTabelaContatos() {
+            const tabela = document.getElementById('tabelaContatos').getElementsByTagName('tbody')[0];
+            tabela.innerHTML = ""; // Limpa a tabela antes de exibir
+
+            contatosDatabase.forEach(item => {
+                const row = tabela.insertRow();
+                row.insertCell(0).textContent = item.nome;
+                row.insertCell(1).textContent = item.categoria;
+                row.insertCell(2).textContent = item.telefone;
+            });
+        }
+
+        // Função para buscar contatos por categoria
+        function buscarContato() {
+            const categoriaBusca = document.getElementById('categoriaBusca').value;
+
+            const resultados = categoriaBusca ? contatosDatabase.filter(item => item.categoria === categoriaBusca) : contatosDatabase;
+
+            const tabela = document.getElementById('tabelaContatos').getElementsByTagName('tbody')[0];
+            tabela.innerHTML = ""; // Limpa a tabela antes de exibir
+
+            if (resultados.length > 0) {
+                resultados.forEach(item => {
+                    const row = tabela.insertRow();
+                    row.insertCell(0).textContent = item.nome;
+                    row.insertCell(1).textContent = item.categoria;
+                    row.insertCell(2).textContent = item.telefone;
+                });
+            } else {
+                const row = tabela.insertRow();
+                row.insertCell(0).textContent = "Nen

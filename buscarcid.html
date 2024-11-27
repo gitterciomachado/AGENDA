@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro e Busca de Códigos CID - Doenças Mentais</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Cadastro e Busca de Códigos CID - Doenças Mentais</h1>
+    </header>
+
+    <div class="container">
+        <h2>Inserir Novo Código CID</h2>
+        <div class="form-group">
+            <label for="codigoCID">Código CID:</label>
+            <input type="text" id="codigoCID" placeholder="Ex: F32.0">
+        </div>
+        <div class="form-group">
+            <label for="descricao">Descrição da Doença:</label>
+            <input type="text" id="descricao" placeholder="Ex: Depressão maior, episódio único">
+        </div>
+        <div class="form-group">
+            <button onclick="inserirCID()">Inserir Código CID</button>
+        </div>
+
+        <h2>Buscar Código CID</h2>
+        <div class="form-group">
+            <label for="busca">Buscar por Código CID ou Descrição:</label>
+            <input type="text" id="busca" placeholder="Digite código CID ou nome da doença" oninput="buscarCID()">
+        </div>
+
+        <h2>Códigos CID Registrados</h2>
+        <table id="tabelaCID">
+            <thead>
+                <tr>
+                    <th>Código CID</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os resultados da busca e da inserção serão exibidos aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let cidDatabase = [
+            {codigo: "F32.0", descricao: "Depressão maior, episódio único"},
+            {codigo: "F40.0", descricao: "Fobia específica (de objetos ou situações)"}
+        ];
+
+        // Função para inserir novos códigos CID
+        function inserirCID() {
+            const codigo = document.getElementById('codigoCID').value;
+            const descricao = document.getElementById('descricao').value;
+
+            if (codigo && descricao) {
+                // Adiciona o novo código ao banco de dados
+                cidDatabase.push({codigo, descricao});
+                document.getElementById('codigoCID').value = "";
+                document.getElementById('descricao').value = "";
+                exibirTabelaCID();
+            } else {
+                alert("Por favor, preencha todos os campos.");
+            }
+        }
+
+        // Função para exibir todos os CIDs na tabela
+        function exibirTabelaCID() {
+            const tabela = document.getElementById('tabelaCID').getElementsByTagName('tbody')[0];
+            tabela.innerHTML = ""; // Limpa a tabela antes de exibir
+
+            cidDatabase.forEach(item => {
+                const row = tabela.insertRow();
+                row.insertCell(0).textContent = item.codigo;
+                row.insertCell(1).textContent = item.descricao;
+            });
+        }
+
+        // Função para buscar CID por código ou descrição
+        function buscarCID() {
+            const busca = document.getElementById('busca').value.toLowerCase();
+
+            const resultados = cidDatabase.filter(item => 
+                item.codigo.toLowerCase().includes(busca) || 
+                item.descricao.toLowerCase().includes(busca)
+            );
+
+            const tabela = document.getElementById('tabelaCID').getElementsByTagName('tbody')[0];
+            tabela.innerHTML = ""; // Limpa a tabela antes de exibir
+
+            if (resultados.length > 0) {
+                resultados.forEach(item => {
+                    const row = tabela.insertRow();
+                    row.insertCell(0).textContent = item.codigo;
+                    row.insertCell(1).textContent = item.descricao;
+                });
+            } else {
+                const row = tabela.insertRow();
+                row.insertCell(0).textContent = "Nenhum resultado encontrado";
+                row.insertCell(1).textContent = "";
+            }
+        }
+
+        // Exibir os registros iniciais
+        exibirTabelaCID();
+    </script>
+
+</body>
+</html>

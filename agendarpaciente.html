@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Bio Psi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .form-container label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .form-container input, .form-container select, .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .patient-list {
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .delete-button {
+            color: white;
+            background-color: #f44336;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agenda Bio Psi</h1>
+
+    <div class="form-container">
+        <h2>Agendar Paciente</h2>
+        <form id="patientForm">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" required>
+
+            <label for="age">Idade:</label>
+            <input type="number" id="age" required>
+
+            <label for="birthdate">Data de Nascimento:</label>
+            <input type="date" id="birthdate" required>
+
+            <label for="maritalStatus">Estado Civil:</label>
+            <select id="maritalStatus" required>
+                <option value="Solteiro(a)">Solteiro(a)</option>
+                <option value="Casado(a)">Casado(a)</option>
+                <option value="Divorciado(a)">Divorciado(a)</option>
+                <option value="Viúvo(a)">Viúvo(a)</option>
+            </select>
+
+            <label for="phone">Telefone:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="complaint">Queixa Principal:</label>
+            <input type="text" id="complaint" required>
+
+            <label for="type">Tipo de Atendimento:</label>
+            <select id="type" required>
+                <option value="Particular">Particular</option>
+                <option value="Plano de Saúde">Plano de Saúde</option>
+            </select>
+
+            <label for="appointmentDate">Data da Consulta:</label>
+            <input type="date" id="appointmentDate" required>
+
+            <label for="appointmentTime">Horário da Consulta:</label>
+            <input type="time" id="appointmentTime" required>
+
+            <label for="status">Status da Consulta:</label>
+            <select id="status" required>
+                <option value="Confirmada">Confirmada</option>
+                <option value="Pendente">Pendente</option>
+                <option value="Cancelada">Cancelada</option>
+            </select>
+
+            <label for="value">Valor da Consulta (R$):</label>
+            <input type="number" id="value" required>
+
+            <label for="paymentStatus">Status do Pagamento:</label>
+            <select id="paymentStatus" required>
+                <option value="Paga">Paga</option>
+                <option value="Pendente">Pendente</option>
+            </select>
+
+            <button type="button" onclick="addPatient()">Adicionar Paciente</button>
+        </form>
+    </div>
+
+    <div class="patient-list">
+        <h2>Lista de Pacientes</h2>
+        <table id="patientTable">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Telefone</th>
+                    <th>Data da Consulta</th>
+                    <th>Horário</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        function addPatient() {
+            const table = document.getElementById('patientTable').getElementsByTagName('tbody')[0];
+            const row = table.insertRow();
+
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const phone = document.getElementById('phone').value;
+            const appointmentDate = document.getElementById('appointmentDate').value;
+            const appointmentTime = document.getElementById('appointmentTime').value;
+            const status = document.getElementById('status').value;
+
+            row.innerHTML = `
+                <td>${name}</td>
+                <td>${age}</td>
+                <td>${phone}</td>
+                <td>${appointmentDate}</td>
+                <td>${appointmentTime}</td>
+                <td>${status}</td>
+                <td><button class="delete-button" onclick="deletePatient(this)">Excluir</button></td>
+            `;
+
+            document.getElementById('patientForm').reset();
+        }
+
+        function deletePatient(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+</body>
+</html>
